@@ -54,7 +54,7 @@ def analysis(analysis_type):
                 output_crs='EPSG:4326',
                 resolution=(-0.00027, 0.00027)
             )
-           
+            
             ds = odc.algo.to_f32(ds) # converting everything into floating values,ML oftens requies float values for analysis
 
             # based on analysis the formula is derived
