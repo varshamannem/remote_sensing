@@ -17,6 +17,7 @@ from geopy.geocoders import Nominatim # used for geocoding and reverse geocoding
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 import plotly.graph_objs as go
+import xarray as xr
 
 matplotlib.use('Agg') # indicate the backend to be used by Matplotlib
 
@@ -63,6 +64,10 @@ def analysis(analysis_type):
                 res = (ds.nir - ds.red) / (ds.nir + ds.red)
             elif analysis_type=="ndwi":
                 res = (ds.green - ds.nir) / (ds.green + ds.nir)
+            elif analysis_type=="evi":
+                res= 2.5 * ((ds.nir - ds.red) / (ds.nir + 6 * ds.red - 7.5 * ds.blue + 1))
+                res=xr.where(~np.isfinite(res),0.0,res)
+                
             elif analysis_type=="graph": #if its graph we need random forest analysis code to compute.
                 ndvi = (ds.nir - ds.red) / (ds.nir + ds.red)
                 evi = 2.5 * ((ds.nir - ds.red) / (ds.nir + 6 * ds.red - 7.5 * ds.blue + 1))
@@ -193,6 +198,9 @@ def analysis(analysis_type):
             elif analysis_type=="ndwi":
                 title = 'Water'
                 cmap = 'RdBu'
+            elif analysis_type=="evi":
+                title = "EVI"
+                cmap='viridis'
 
             sub_res = res.isel(time=[0, -1]) # select first and last timestamps of data
             mean_res = res.mean(dim=['latitude', 'longitude'], skipna=True)
