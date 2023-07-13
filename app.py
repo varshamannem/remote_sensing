@@ -194,7 +194,7 @@ def analysis(analysis_type):
 
             if analysis_type=="ndvi":
                 title = 'Vegetation'
-                cmap = 'RdYlBu'
+                cmap = 'summer'
             elif analysis_type=="ndwi":
                 title = 'Water'
                 cmap = 'RdBu'

@@ -145,6 +145,14 @@
             drawnItems.removeLayer(e.layer);
         }
     });
+    //
+    var bounds = [[15.286237505336244,80.06369921260253], [ 16.280813604615744,81.09135078500897]];
+
+    // create an orange rectangle
+    L.rectangle(bounds, {color: "#72A0C1", weight: 1}).addTo(map);
+
+    // zoom the map to the rectangle bounds
+    map.fitBounds(bounds);
 
     // getting tile coordinates from map
     function getPolygonCoords(coords) {
@@ -167,6 +175,7 @@
     function mapClear(){
         drawnItems.clearLayers();
         clist=[]
+        fetched={}
         img.innerHTML=``
         area_colors=[]
         cardBlock1.style.display="none"
